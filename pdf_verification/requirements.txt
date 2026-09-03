@@ -1,0 +1,6 @@
+djangorestframework
+mysqlclient
+PyPDF2
+python-magic
+django-cors-headers
+python-dotenv

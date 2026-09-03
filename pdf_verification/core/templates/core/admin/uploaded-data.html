@@ -1,0 +1,97 @@
+{% extends "core/admin/base.html" %}
+
+{% block title %}Uploaded Data{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-3 px-lg-4 py-4">
+    <div class="page-heading">
+        <div class="page-heading-copy">
+            <span class="page-icon"><i class="bi bi-file-earmark-pdf" aria-hidden="true"></i></span>
+            <div>
+                <p class="eyebrow mb-1">Admin Panel</p>
+                <h1 class="h3 mb-1">Uploaded Data</h1>
+                <p class="text-muted mb-0">All uploaded PDF verification records.</p>
+            </div>
+        </div>
+        <div class="heading-actions">
+            <a class="btn btn-primary btn-sm" href="/admin-panel/upload/">
+                <i class="bi bi-cloud-upload" aria-hidden="true"></i> Upload New PDF
+            </a>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-md-4">
+            <div class="mini-card">
+                <span>Total Records</span>
+                <strong>{{ total_records }}</strong>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="mini-card">
+                <span>Verified</span>
+                <strong class="text-success">{{ verified_count }}</strong>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="mini-card">
+                <span>Mismatched</span>
+                <strong class="text-danger">{{ mismatched_count }}</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Records Table -->
+    <div class="panel">
+        <div class="panel-header">
+            <div>
+                <h2 class="h5 mb-1 section-title"><i class="bi bi-list-ul" aria-hidden="true"></i><span>Record List</span></h2>
+                <p class="text-muted mb-0">Click on a row to view detailed results.</p>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>File Name</th>
+                        <th>Upload Date</th>
+                        <th>Grand Total (Summary)</th>
+                        <th>Grand Total (Calc)</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td>#{{ record.id }}</td>
+                        <td>{{ record.file_name }}</td>
+                        <td>{{ record.upload_date|date:"Y-m-d H:i:s" }}</td>
+                        <td>{{ record.grand_total_summary|floatformat:2 }}</td>
+                        <td>{{ record.grand_total_calculated|floatformat:2 }}</td>
+                        <td>
+                            {% if record.is_fully_verified %}
+                                <span class="badge text-bg-success">✅ Verified</span>
+                            {% else %}
+                                <span class="badge text-bg-danger">❌ Mismatch</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="/admin-panel/record/{{ record.id }}/" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-eye"></i> View
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">No records found. Please upload a PDF.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,187 @@
+{% extends "core/admin/base.html" %}
+
+{% block title %}Record Details #{{ record.id }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-3 px-lg-4 py-4">
+    <div class="page-heading">
+        <div class="page-heading-copy">
+            <span class="page-icon"><i class="bi bi-file-earmark-pdf" aria-hidden="true"></i></span>
+            <div>
+                <p class="eyebrow mb-1">Record Details</p>
+                <h1 class="h3 mb-1">{{ record.file_name }}</h1>
+                <p class="text-muted mb-0">Detailed verification results for this PDF file.</p>
+            </div>
+        </div>
+        <div class="heading-actions">
+            <a class="btn btn-outline-secondary btn-sm" href="/admin-panel/uploaded-data/">
+                <i class="bi bi-arrow-left" aria-hidden="true"></i> Back to List
+            </a>
+        </div>
+    </div>
+
+    <!-- File Information -->
+    <div class="panel">
+        <div class="panel-header">
+            <div>
+                <h2 class="h5 mb-1 section-title"><i class="bi bi-info-circle" aria-hidden="true"></i><span>File Information</span></h2>
+                <p class="text-muted mb-0">Basic information about the uploaded file.</p>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-3">
+                <div class="mini-card">
+                    <span>File Name</span>
+                    <strong>{{ record.file_name }}</strong>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mini-card">
+                    <span>Upload Date</span>
+                    <strong>{{ record.upload_date|date:"Y-m-d H:i:s" }}</strong>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mini-card">
+                    <span>Record ID</span>
+                    <strong>#{{ record.id }}</strong>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mini-card">
+                    <span>Overall Status</span>
+                    {% if record.is_fully_verified %}
+                        <strong class="text-success">✅ Verified</strong>
+                    {% else %}
+                        <strong class="text-danger">❌ Mismatch</strong>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Company Details Table -->
+    <div class="panel mt-3">
+        <div class="panel-header">
+            <div>
+                <h2 class="h5 mb-1 section-title"><i class="bi bi-building" aria-hidden="true"></i><span>Company Verification Results</span></h2>
+                <p class="text-muted mb-0">Summary vs Calculated amounts for each company.</p>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>PDF Summary Amount</th>
+                        <th>Calculated Amount</th>
+                        <th>Difference</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- GEPCO -->
+                    <tr>
+                        <td><strong>GEPCO</strong></td>
+                        <td>{{ record.gepco_summary|floatformat:2 }}</td>
+                        <td>{{ record.gepco_calculated|floatformat:2 }}</td>
+                        <td>{{ record.gepco_diff|floatformat:2 }}</td>
+                        <td>
+                            {% if record.gepco_verified %}
+                                <span class="badge text-bg-success">✅ Verified</span>
+                            {% else %}
+                                <span class="badge text-bg-danger">❌ Mismatch</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <!-- LESCO -->
+                    <tr>
+                        <td><strong>LESCO</strong></td>
+                        <td>{{ record.lesco_summary|floatformat:2 }}</td>
+                        <td>{{ record.lesco_calculated|floatformat:2 }}</td>
+                        <td>{{ record.lesco_diff|floatformat:2 }}</td>
+                        <td>
+                            {% if record.lesco_verified %}
+                                <span class="badge text-bg-success">✅ Verified</span>
+                            {% else %}
+                                <span class="badge text-bg-danger">❌ Mismatch</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <!-- MEPCO -->
+                    <tr>
+                        <td><strong>MEPCO</strong></td>
+                        <td>{{ record.mepco_summary|floatformat:2 }}</td>
+                        <td>{{ record.mepco_calculated|floatformat:2 }}</td>
+                        <td>{{ record.mepco_diff|floatformat:2 }}</td>
+                        <td>
+                            {% if record.mepco_verified %}
+                                <span class="badge text-bg-success">✅ Verified</span>
+                            {% else %}
+                                <span class="badge text-bg-danger">❌ Mismatch</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <!-- SEPCO -->
+                    <tr>
+                        <td><strong>SEPCO</strong></td>
+                        <td>{{ record.sepco_summary|floatformat:2 }}</td>
+                        <td>{{ record.sepco_calculated|floatformat:2 }}</td>
+                        <td>{{ record.sepco_diff|floatformat:2 }}</td>
+                        <td>
+                            {% if record.sepco_verified %}
+                                <span class="badge text-bg-success">✅ Verified</span>
+                            {% else %}
+                                <span class="badge text-bg-danger">❌ Mismatch</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <!-- SNGPL -->
+                    <tr>
+                        <td><strong>SNGPL</strong></td>
+                        <td>{{ record.sngpl_summary|floatformat:2 }}</td>
+                        <td>{{ record.sngpl_calculated|floatformat:2 }}</td>
+                        <td>{{ record.sngpl_diff|floatformat:2 }}</td>
+                        <td>
+                            {% if record.sngpl_verified %}
+                                <span class="badge text-bg-success">✅ Verified</span>
+                            {% else %}
+                                <span class="badge text-bg-danger">❌ Mismatch</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <!-- SSGC -->
+                    <tr>
+                        <td><strong>SSGC</strong></td>
+                        <td>{{ record.ssgc_summary|floatformat:2 }}</td>
+                        <td>{{ record.ssgc_calculated|floatformat:2 }}</td>
+                        <td>{{ record.ssgc_diff|floatformat:2 }}</td>
+                        <td>
+                            {% if record.ssgc_verified %}
+                                <span class="badge text-bg-success">✅ Verified</span>
+                            {% else %}
+                                <span class="badge text-bg-danger">❌ Mismatch</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr style="font-weight: bold; background-color: #f8f9fa;">
+                        <td><strong>GRAND TOTAL</strong></td>
+                        <td>{{ record.grand_total_summary|floatformat:2 }}</td>
+                        <td>{{ record.grand_total_calculated|floatformat:2 }}</td>
+                        <td>{{ record.grand_total_diff|floatformat:2 }}</td>
+                        <td>
+                            {% if record.grand_total_verified %}
+                                <span class="badge text-bg-success">✅ Verified</span>
+                            {% else %}
+                                <span class="badge text-bg-danger">❌ Mismatch</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

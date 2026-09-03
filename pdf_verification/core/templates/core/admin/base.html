@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Panel{% endblock %}</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/admin/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'core/admin/vendors/bootstrap-icons/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'core/admin/css/style.css' %}">
+</head>
+<body>
+    <div class="admin-shell">
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+                <a class="brand-mark" href="/">
+                    <span class="brand-icon"><i class="bi bi-grid-1x2-fill"></i></span>
+                    <span class="brand-copy">
+                        <span class="brand-title">PDF Verify</span>
+                        <span class="brand-subtitle">Admin Panel</span>
+                    </span>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <!-- Dashboard -->
+                <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">
+                    <span class="nav-icon"><i class="bi bi-speedometer2"></i></span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+
+                <!-- Upload PDF -->
+                <a class="nav-link {% if 'upload' in request.path and 'uploaded-data' not in request.path %}active{% endif %}" href="/admin-panel/upload/">
+                    <span class="nav-icon"><i class="bi bi-cloud-upload"></i></span>
+                    <span class="nav-text">Upload PDF</span>
+                </a>
+
+                <!-- ===== UPLOADED DATA (NEW) ===== -->
+                <a class="nav-link {% if 'uploaded-data' in request.path or 'record' in request.path %}active{% endif %}" href="/admin-panel/uploaded-data/">
+                    <span class="nav-icon"><i class="bi bi-file-earmark-pdf"></i></span>
+                    <span class="nav-text">Uploaded Data</span>
+                </a>
+
+                <!-- Users -->
+                <a class="nav-link {% if 'users' in request.path and 'add-user' not in request.path %}active{% endif %}" href="/admin-panel/users/">
+                    <span class="nav-icon"><i class="bi bi-people"></i></span>
+                    <span class="nav-text">Users</span>
+                </a>
+
+                <!-- Add User -->
+                <a class="nav-link {% if 'add-user' in request.path %}active{% endif %}" href="/admin-panel/add-user/">
+                    <span class="nav-icon"><i class="bi bi-person-plus"></i></span>
+                    <span class="nav-text">Add User</span>
+                </a>
+
+                <!-- Profile -->
+                <a class="nav-link {% if 'profile' in request.path %}active{% endif %}" href="/admin-panel/profile/">
+                    <span class="nav-icon"><i class="bi bi-person-badge"></i></span>
+                    <span class="nav-text">Profile</span>
+                </a>
+
+                <!-- Charts -->
+                <a class="nav-link {% if 'charts' in request.path %}active{% endif %}" href="/admin-panel/charts/">
+                    <span class="nav-icon"><i class="bi bi-bar-chart-line"></i></span>
+                    <span class="nav-text">Charts</span>
+                </a>
+
+                <!-- Tables -->
+                <a class="nav-link {% if 'tables' in request.path %}active{% endif %}" href="/admin-panel/tables/">
+                    <span class="nav-icon"><i class="bi bi-table"></i></span>
+                    <span class="nav-text">Tables</span>
+                </a>
+
+                <!-- Forms -->
+                <a class="nav-link {% if 'forms' in request.path %}active{% endif %}" href="/admin-panel/forms/">
+                    <span class="nav-icon"><i class="bi bi-ui-checks-grid"></i></span>
+                    <span class="nav-text">Forms</span>
+                </a>
+
+                <!-- Components -->
+                <a class="nav-link {% if 'components' in request.path %}active{% endif %}" href="/admin-panel/components/">
+                    <span class="nav-icon"><i class="bi bi-grid-3x3-gap"></i></span>
+                    <span class="nav-text">Components</span>
+                </a>
+
+                <!-- Alerts -->
+                <a class="nav-link {% if 'alerts' in request.path %}active{% endif %}" href="/admin-panel/alerts/">
+                    <span class="nav-icon"><i class="bi bi-exclamation-triangle"></i></span>
+                    <span class="nav-text">Alerts</span>
+                </a>
+
+                <!-- Modals -->
+                <a class="nav-link {% if 'modals' in request.path %}active{% endif %}" href="/admin-panel/modals/">
+                    <span class="nav-icon"><i class="bi bi-window-stack"></i></span>
+                    <span class="nav-text">Modals</span>
+                </a>
+
+                <!-- Settings -->
+                <a class="nav-link {% if 'settings' in request.path %}active{% endif %}" href="/admin-panel/settings/">
+                    <span class="nav-icon"><i class="bi bi-gear"></i></span>
+                    <span class="nav-text">Settings</span>
+                </a>
+
+                <!-- Blank Page -->
+                <a class="nav-link {% if 'blank' in request.path %}active{% endif %}" href="/admin-panel/blank/">
+                    <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                    <span class="nav-text">Blank Page</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-user">
+                <img class="avatar-img avatar-md" src="{% static 'core/admin/images/avatar/avatar.jpg' %}" alt="Admin">
+                <strong>Admin</strong>
+                <small>Active Workspace</small>
+            </div>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                <span class="sidebar-footer-text">System running smoothly</span>
+            </div>
+        </aside>
+
+        <!-- ===== MAIN CONTENT AREA ===== -->
+        <div class="admin-main">
+            <!-- Top Navbar -->
+            <nav class="navbar admin-navbar navbar-expand bg-white">
+                <div class="container-fluid px-3 px-lg-4">
+                    <button class="sidebar-toggle" type="button" data-sidebar-toggle>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <form class="d-none d-md-flex ms-3 flex-grow-1" role="search">
+                        <input class="form-control search-input" type="search" placeholder="Search..." aria-label="Search">
+                    </form>
+
+                    <div class="navbar-actions ms-auto">
+                        <button class="icon-button theme-toggle" type="button" data-theme-toggle>
+                            <i class="bi bi-moon-stars" data-theme-icon></i>
+                        </button>
+                        <div class="dropdown">
+                            <button class="icon-button" type="button" data-bs-toggle="dropdown">
+                                <span class="notification-dot"></span>
+                                <i class="bi bi-bell"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end notification-menu">
+                                <div class="dropdown-header fw-bold text-body">Notifications</div>
+                                <a class="dropdown-item" href="#">
+                                    <span class="notification-title">New user registered</span>
+                                    <span class="notification-time">4 minutes ago</span>
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <span class="notification-title">File uploaded</span>
+                                    <span class="notification-time">32 minutes ago</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="profile-button dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <img class="avatar-img avatar-sm" src="{% static 'core/admin/images/avatar/avatar.jpg' %}" alt="Admin">
+                                <span class="profile-name d-none d-sm-inline">Admin</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="/admin-panel/profile/">Profile</a></li>
+                                <li><a class="dropdown-item" href="/admin-panel/settings/">Account settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/admin-panel/login/">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Page Content -->
+            <main class="dashboard-content">
+                {% block content %}
+                {% endblock %}
+            </main>
+
+            <!-- Footer -->
+            <footer class="admin-footer">
+                <div class="container-fluid px-3 px-lg-4">
+                    <span>Copyright 2026 PDF Verification System.</span>
+                    <span>All rights reserved.</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="{% static 'core/admin/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'core/admin/js/main.js' %}"></script>
+</body>
+</html>

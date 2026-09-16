@@ -1,6 +1,9 @@
-djangorestframework
+Django==4.2.*
+djangorestframework==3.15.*
 mysqlclient
+PyMySQL
 PyPDF2
 python-magic
 django-cors-headers
 python-dotenv
+pdfplumber

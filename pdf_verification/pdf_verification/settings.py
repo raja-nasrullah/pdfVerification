@@ -4,20 +4,17 @@ Django settings for pdf_verification project.
 
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-load_dotenv(BASE_DIR / '.env')
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'django-insecure-your-secret-key-here-change-in-production'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = True
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -67,15 +64,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pdf_verification.wsgi.application'
 
-# Database - MySQL Configuration
+# Database - SQLite Configuration
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE'),
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'pdf_verification',
+        'USER': 'root',          # Change this to your MySQL username
+        'PASSWORD': '',          # Change this to your MySQL password
+        'HOST': 'localhost',     # Or 127.0.0.1
+        'PORT': '3306',
     }
 }
 
